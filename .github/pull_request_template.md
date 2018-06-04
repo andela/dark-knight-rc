@@ -1,8 +1,20 @@
-<!-- Thanks so much for your PR, your contribution is appreciated! -->
+#### What does this PR do?
 
-Please provide the following information to help us approve your PR. Failure to provide this
-information may result in your PR being closed without comment.
 
-- [ ] Clearly explain what your PR is trying to accomplish. A link to an issue is best
-- [ ] Provide us detailed instructions on how we can test your PR
+#### Description of Task to be completed?
+
+
+#### How should this be manually tested?
+
+
+#### Any background context you want to provide?
+
+
+#### What are the relevant pivotal tracker stories?
+
+
+#### Screenshots (if appropriate)
+
+
+#### Questions:
 
