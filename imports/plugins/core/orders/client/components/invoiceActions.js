@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Meteor } from "meteor/meteor";
 import { formatPriceString } from "/client/api";
 import { Components, registerComponent } from "@reactioncommerce/reaction-components";
 
@@ -49,8 +50,36 @@ class InvoiceActions extends Component {
     showAfterPaymentCaptured: PropTypes.bool
   }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      canceled: false
+    };
+  }
+
   state = {
     value: 0
+  }
+  componentDidMount() {
+    const { order } = this.props;
+    Meteor.call("orders/getAdminOrderStatus", order._id, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        switch (result) {
+          case "coreOrderWorkflow/canceled":
+            this.setState({ canceled: true });
+            break;
+          default:
+            this.setState({ canceled: false });
+        }
+      }
+    });
+  }
+
+  removeOrder(orderId) {
+    Meteor.call("orders/removeOrder", orderId);
   }
 
   renderCapturedTotal() {
@@ -132,7 +161,7 @@ class InvoiceActions extends Component {
           </div>
         }
 
-        {this.props.showAfterPaymentCaptured &&
+        {this.props.showAfterPaymentCaptured && !this.state.canceled ?
           <div className="cancel-order-btn">
             <Components.Button
               className="btn btn-danger"
@@ -144,6 +173,9 @@ class InvoiceActions extends Component {
               style={{ marginBottom: 10 }}
               data-i18n="order.cancelOrderLabel"
             />
+          </div> :
+          <div style={{ paddingTop: 10, paddingBottom: 10 }}>
+            <button className="btn btn-danger" onClick={() => this.removeOrder(this.props.order._id)}>Remove Order</button>
           </div>
         }
 
@@ -160,7 +192,7 @@ class InvoiceActions extends Component {
   }
 
   renderApproval() {
-    if (this.props.paymentPendingApproval) {
+    if (this.props.paymentPendingApproval && !this.state.canceled) {
       return (
         <div className="btn-block">
           <div>
@@ -190,7 +222,7 @@ class InvoiceActions extends Component {
       );
     }
 
-    if (this.props.paymentApproved) {
+    if (this.props.paymentApproved && !this.state.canceled) {
       return (
         <div className="flex">
           <a
@@ -219,6 +251,11 @@ class InvoiceActions extends Component {
           </button>
         </div>
       );
+    }
+    if (this.state.canceled) {
+      return (<div style={{ paddingTop: 10, paddingBottom: 10 }}>
+        <button className="btn btn-danger" onClick={() => this.removeOrder(this.props.order._id)}>Remove Order</button>
+      </div>);
     }
   }
 
