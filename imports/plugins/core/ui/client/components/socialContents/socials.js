@@ -1,7 +1,5 @@
 import React from "react";
 import "./style.less";
-// import PropTypes from "prop-types";
-// import classnames from "classnames/dedupe";
 import { registerComponent } from "@reactioncommerce/reaction-components";
 
 export const SocialContents = () => {
