@@ -84,7 +84,6 @@ class InvoiceActions extends Component {
 
   renderCapturedTotal() {
     const { invoice } = this.props;
-
     return (
       <div className="invoice-summary">
         <span  className="invoice-label captured-total">
@@ -161,7 +160,7 @@ class InvoiceActions extends Component {
           </div>
         }
 
-        {this.props.showAfterPaymentCaptured && !this.state.canceled ?
+        {this.props.showAfterPaymentCaptured ?
           <div className="cancel-order-btn">
             <Components.Button
               className="btn btn-danger"
@@ -192,7 +191,7 @@ class InvoiceActions extends Component {
   }
 
   renderApproval() {
-    if (this.props.paymentPendingApproval && !this.state.canceled) {
+    if (this.props.paymentPendingApproval) {
       return (
         <div className="btn-block">
           <div>
@@ -222,7 +221,7 @@ class InvoiceActions extends Component {
       );
     }
 
-    if (this.props.paymentApproved && !this.state.canceled) {
+    if (this.props.paymentApproved) {
       return (
         <div className="flex">
           <a
