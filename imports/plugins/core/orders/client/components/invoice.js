@@ -174,7 +174,6 @@ class Invoice extends Component {
     */
   renderInvoice() {
     const { invoice, discounts } = this.props;
-
     return (
       <div>
         <div className="order-summary-form-group">
