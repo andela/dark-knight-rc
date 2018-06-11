@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 
 const GetOrdersHelper = (getAllOrders) => {
@@ -22,7 +23,6 @@ const GetOrdersHelper = (getAllOrders) => {
         if (totalSalesHistory[(items.createdAt).toLocaleDateString()]) {
           totalSalesHistory[(items.createdAt).toLocaleDateString()].sales += Number.parseFloat(items.billing[0].invoice.subtotal);
           totalSalesHistory[(items.createdAt).toLocaleDateString()].date = (items.createdAt).toLocaleDateString();
-
         }
 
         if (!analytics[eachItem.title]) {
@@ -57,8 +57,8 @@ const GetOrdersHelper = (getAllOrders) => {
     totalOrders++;
   });
 
-//   console.log("cancel", canceledOrders);
-//   console.log("sales history", totalSalesHistory);
+  //   console.log("cancel", canceledOrders);
+  //   console.log("sales history", totalSalesHistory);
 
   return {
     analytics,

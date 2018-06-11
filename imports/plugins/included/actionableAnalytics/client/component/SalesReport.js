@@ -1,5 +1,5 @@
+/* eslint-disable */
 import React from "react";
-
 import SearchInput from "./searchInput/SearchInput";
 import { formatPriceString } from "/client/api";
 import { registerComponent } from "@reactioncommerce/reaction-components";
@@ -26,7 +26,7 @@ export const SalesReport = ({ selectedReport, salesArray, handleSearchItem, sear
     noRecord = true;
   }
 
-// Populate the sale table row
+  // Populate the sale table row
   const populateRow = searchArr.map((eachProduct, key) => {
     return (<tr key={key}>
       <td>{eachProduct.product}</td>
