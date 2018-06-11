@@ -1,5 +1,5 @@
+/* eslint-disable */
 import React from "react";
-// import { Card,  CardHeader, CardBody } from "/imports/plugins/core/ui/client/components";
 
 const DisplayReportCard = ({ title, id, amount, ReportIcon, handleDisplayChart }) => {
   return (

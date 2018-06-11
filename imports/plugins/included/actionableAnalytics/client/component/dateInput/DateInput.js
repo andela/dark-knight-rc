@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 
 const DateInput = ({ dateTitle, handleChangeDate, id }) => {

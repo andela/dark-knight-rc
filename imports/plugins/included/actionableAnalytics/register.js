@@ -1,4 +1,4 @@
-// register.js
+
 import { Reaction } from "/server/api";
 
 Reaction.registerPackage({
@@ -12,7 +12,7 @@ Reaction.registerPackage({
   registry: [
     {
       route: "/dashboard/analytics",
-      provides: "dashboard",
+      provides: ["dashboard"],
       name: "Analytics",
       label: "Data Analytics",
       description: "View Analysis",

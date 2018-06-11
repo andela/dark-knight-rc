@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { registerComponent } from "@reactioncommerce/reaction-components";
 import { Tooltip } from "/imports/plugins/core/ui/client/components";
@@ -6,11 +7,9 @@ export const Sidebar = (props) => {
   const tooltipIsOpen = props.tooltipIsOpen;
   const tooltipIsOpenSales = props.tooltipIsOpenSales;
   const tooltipIsOpenInventory = props.tooltipIsOpenInventory;
-  const tooltipIsOpenPerformance = props.tooltipIsOpenPerformance;
   const tooltipOverview = (tooltipIsOpen && <span>{"Overview"}</span>);
   const tooltipSalesReport = (tooltipIsOpenSales && <span>{"Sales"}</span>);
   const tooltipInventoryReport = (tooltipIsOpenInventory && <span>{"Data and Inventory"}</span>);
-  const tooltipPerformanceReport = (tooltipIsOpenPerformance && <span>{"Product Performance"}</span>);
 
   return (
     <div className="sidebar-drawer container">

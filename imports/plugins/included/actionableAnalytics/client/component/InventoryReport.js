@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import SearchInput from "./searchInput/SearchInput";
 import { formatPriceString } from "/client/api";
@@ -35,10 +36,10 @@ export const InventoryReport = ({ searchProduct, selectedReport, productArray, h
       <td>{eachProduct.originCountry ? eachProduct.originCountry : "Not Available"}</td>
     </tr>);
   });
-    
+
   return (
     <div className="container" style= {{ display: selectedReport === "ShowInventory" ? "block" : "none" }}>
-    
+
       <h1 className="text-center"> Data and Inventory </h1>
       <SearchInput
         id="inventoryReport"
