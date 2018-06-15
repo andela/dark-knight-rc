@@ -96,8 +96,16 @@ const wrapComponent = (Comp) => (
           this.setState({ sortQuery: { price: -1 } });
           break;
 
+        case "highest rating":
+          this.setState({ sortQuery: { averageRating: - 1 } });
+          break;
+
+        case "least rating":
+          this.setState({ sortQuery: { averageRating: 1 } });
+          break;
+
         default:
-          this.setState({ sortQuery: {} });
+          this.setState({ sortQuery: { averageRating: - 1 } });
           break;
       }
 
