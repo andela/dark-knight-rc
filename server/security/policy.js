@@ -39,6 +39,7 @@ BrowserPolicy.content.allowOriginForAll("connect.facebook.net");
 BrowserPolicy.content.allowOriginForAll("*.googleusercontent.com");
 BrowserPolicy.content.allowOriginForAll("*.cdninstagram.com");
 
+BrowserPolicy.content.allowImageOrigin("res.cloudinary.com");
 BrowserPolicy.content.allowImageOrigin("fbcdn-profile-a.akamaihd.net");
 BrowserPolicy.content.allowImageOrigin("secure.gravatar.com");
 BrowserPolicy.content.allowImageOrigin("i0.wp.com");
