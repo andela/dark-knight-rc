@@ -29,7 +29,7 @@ class TopProducts extends Component {
             { this.props.products.map(product => (
               <a key={product._id} href={`/product/${product.handle}/`}>
                 <div className="card products align-center col-sm-6 col-md-3">
-                  <img className="card-img-top img-responsive" src={this.getImageUrl(product._id)} alt="Product"/>
+                  <div className="card-img-top" style={{ "background-image": `url(${this.getImageUrl(product._id)})` }} alt="Product" />
                   <div className="card-body">
                     <h4>{product.title}</h4>
                     <h5>{formatPriceString(product.price.range || product.price)}</h5>
