@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Components } from "@reactioncommerce/reaction-components";
 import { Reaction } from "/client/api";
 import Login from "./login";
+import { TakeTour, steps } from "../../../../custom/vendorTour/takeTour";
+import { Steps } from "intro.js-react";
 
 const iconStyle = {
   margin: "10px 10px 10px 6px",
@@ -20,80 +22,86 @@ const menuStyle = {
 class MainDropdown extends Component {
   static propTypes = {
     adminShortcuts: PropTypes.object,
-    currentAccount: PropTypes.oneOfType(
-      [PropTypes.bool, PropTypes.object]
-    ),
+    currentAccount: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     handleChange: PropTypes.func,
     userImage: PropTypes.object,
     userName: PropTypes.string,
     userShortcuts: PropTypes.object
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      enableIntrojs: false
+    };
   }
 
   buttonElement() {
     const { userImage, userName } = this.props;
     return (
-      <Components.Button containerStyle={{ color: "#000", fontWeight: "normal", letterSpacing: 0.8 }}>
+      <Components.Button containerStyle={{ fontWeight: "normal", letterSpacing: 0.8 }}>
         <span>{userImage}</span>
         <span>{userName}</span>&nbsp;
-        <Components.Icon
-          icon={"fa fa-caret-down"}
-        />
+        <Components.Icon icon={"fa fa-caret-down"} />
       </Components.Button>
     );
   }
+  startIntrojs = () => {
+    this.setState({
+      enableIntrojs: true
+    });
+  };
+
+  onExit = () => {
+    this.setState({
+      enableIntrojs: false
+    });
+  };
 
   renderAdminIcons() {
-    return (
-      Reaction.Apps(this.props.adminShortcuts).map((shortcut) => (
-        <Components.MenuItem
-          key={shortcut.packageId}
-          className="accounts-a-tag"
-          label={shortcut.label}
-          i18nKeyLabel={shortcut.i18nKeyLabel}
-          icon={shortcut.icon}
-          iconStyle={iconStyle}
-          value={shortcut}
-        />
-      ))
-    );
+    const adminLinks = Reaction.Apps(this.props.adminShortcuts).map(shortcut => (
+      <Components.MenuItem
+        key={shortcut.packageId}
+        className="accounts-a-tag"
+        label={shortcut.label}
+        i18nKeyLabel={shortcut.i18nKeyLabel}
+        icon={shortcut.icon}
+        iconStyle={iconStyle}
+        value={shortcut}
+      />
+    ));
+    if (adminLinks.length !== 0) {
+      adminLinks.unshift(<TakeTour startIntro={this.startIntrojs} key="shalagadagboska" />);
+    }
+    return adminLinks;
   }
 
   renderUserIcons() {
-    return (
-      Reaction.Apps(this.props.userShortcuts).map((option) => (
-        <Components.MenuItem
-          key={option.packageId}
-          className="accounts-a-tag"
-          label={option.label}
-          i18nKeyLabel={option.i18nKeyLabel}
-          icon={option.icon && option.icon}
-          iconStyle={iconStyle}
-          value={option}
-        />
-      ))
-    );
-  }
-
-  renderSignOutButton() {
-    return (
+    return Reaction.Apps(this.props.userShortcuts).map(option => (
       <Components.MenuItem
-        className="btn btn-primary btn-block accounts-btn-tag"
-        label="Sign out"
-        value="logout"
+        key={option.packageId}
+        className="accounts-a-tag"
+        label={option.label}
+        i18nKeyLabel={option.i18nKeyLabel}
+        icon={option.icon && option.icon}
+        iconStyle={iconStyle}
+        value={option}
       />
-    );
+    ));
+  }
+  renderSignOutButton() {
+    return <Components.MenuItem className="btn btn-primary btn-block accounts-btn-tag" label="Sign out" value="logout" />;
   }
 
   renderSignInComponent() {
     return (
       <div className="accounts-dropdown">
         <div className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000">
-          <span><Components.Translation defaultValue="Sign In" i18nKey="accountsUI.signIn" /></span><b className="caret" />
+          <span>
+            <Components.Translation defaultValue="Sign In" i18nKey="accountsUI.signIn" />
+          </span>
+          <b className="caret" />
         </div>
-        <div
-          className="accounts-dialog accounts-layout dropdown-menu pull-right"
-          style={{ padding: "10px 20px" }}
-        >
+        <div className="accounts-dialog accounts-layout dropdown-menu pull-right" style={{ padding: "10px 20px" }}>
           <Login />
         </div>
       </div>
@@ -103,7 +111,7 @@ class MainDropdown extends Component {
   render() {
     return (
       <div className="accounts">
-        {this.props.currentAccount ?
+        {this.props.currentAccount ? (
           <div style={{ paddingRight: 5 }}>
             <Components.DropDownMenu
               buttonElement={this.buttonElement()}
@@ -117,12 +125,13 @@ class MainDropdown extends Component {
               {this.renderAdminIcons()}
               {this.renderSignOutButton()}
             </Components.DropDownMenu>
+            <Steps enabled={this.state.enableIntrojs} steps={steps} initialStep={0} onExit={this.onExit} />
           </div>
-          :
+        ) : (
           <div className="accounts dropdown" role="menu">
             {this.renderSignInComponent()}
           </div>
-        }
+        )}
       </div>
     );
   }
