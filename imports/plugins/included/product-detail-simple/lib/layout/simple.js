@@ -189,6 +189,15 @@ export default function blocks() {
               paddingTop: 20
             }
           }
+        },
+        // Add review
+        {
+          component: "Review",
+          props: {
+            style: {
+              paddingTop: 80
+            }
+          }
         }
 
       ]
