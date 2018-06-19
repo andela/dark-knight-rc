@@ -4,8 +4,6 @@ import classnames from "classnames";
 import { Components, registerComponent } from "@reactioncommerce/reaction-components";
 import Blaze from "meteor/gadicc:blaze-react-component";
 import { Template } from "meteor/templating";
-import { SocialContents } from "../../../ui/client/components";
-
 const CoreLayout = ({ actionViewIsOpen, structure }) => {
   const { layoutFooter, template } = structure || {};
 
@@ -23,7 +21,6 @@ const CoreLayout = ({ actionViewIsOpen, structure }) => {
       {Template[template] && (
         <main>
           <Blaze template={template} />
-          <SocialContents />
         </main>
       )}
       {Template[layoutFooter] && <Blaze template={layoutFooter} className="reaction-navigation-footer footer-default" />}

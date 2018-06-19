@@ -221,6 +221,7 @@ class Invoice extends Component {
   }
 
   render() {
+    const { order } = this.props;
     return (
       <Components.CardGroup>
         <Components.Card>
@@ -236,7 +237,7 @@ class Invoice extends Component {
               {this.renderInvoice()}
             </div>
 
-            <InvoiceActions {...this.props}/>
+            <InvoiceActions {...this.props} order={order}/>
           </Components.CardBody>
         </Components.Card>
       </Components.CardGroup>
