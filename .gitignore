@@ -38,6 +38,4 @@ custom/server/*
 private/custom/*
 !private/custom/.gitkeep
 
-!imports/plugins/custom/.gitkeep
-
 .reaction/config.json
