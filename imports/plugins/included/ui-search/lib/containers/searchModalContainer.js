@@ -20,7 +20,11 @@ const wrapComponent = (Comp) => (
         collection: "products",
         value: localStorage.getItem("searchValue") || "",
         renderChild: true,
-        facets: []
+        facets: [],
+        priceQuery: "0 - 10000",
+        vendorQuery: "",
+        sortQuery: {},
+        sortValue: ""
       };
     }
 
@@ -70,6 +74,36 @@ const wrapComponent = (Comp) => (
       this.setState({ collection });
     }
 
+    handlePriceSelect = (event) => {
+      this.setState({ priceQuery: event.target.value });
+    };
+
+    handleVendorSelect = (event) => {
+      this.setState({ vendorQuery: event.target.value });
+    }
+
+    handleSortSelect = (event) => {
+      switch (event.target.value) {
+        case "newest":
+          this.setState({ sortQuery: { createdAt: - 1 } });
+          break;
+
+        case "oldest":
+          this.setState({ sortQuery: { createdAt: 1 } });
+          break;
+
+        case "price":
+          this.setState({ sortQuery: { price: -1 } });
+          break;
+
+        default:
+          this.setState({ sortQuery: {} });
+          break;
+      }
+
+      this.setState({ sortValue: event.target.value });
+    }
+
     handleChildUnmount = () =>  {
       this.setState({ renderChild: false });
     }
@@ -81,11 +115,18 @@ const wrapComponent = (Comp) => (
             <div className="rui search-modal js-search-modal">
               <Comp
                 handleChange={this.handleChange}
+                handlePriceSelect={this.handlePriceSelect}
+                handleVendorSelect={this.handleVendorSelect}
+                handleSortSelect={this.handleSortSelect}
                 handleClick={this.handleClick}
                 handleToggle={this.handleToggle}
                 handleAccountClick={this.handleAccountClick}
                 handleTagClick={this.handleTagClick}
                 value={this.state.value}
+                priceQuery={this.state.priceQuery}
+                vendorQuery={this.state.vendorQuery}
+                sortQuery={this.state.sortQuery}
+                sortValue={this.state.sortValue}
                 unmountMe={this.handleChildUnmount}
                 searchCollection={this.state.collection}
                 facets={this.state.facets}

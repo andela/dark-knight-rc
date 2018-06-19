@@ -32,7 +32,7 @@ const EmptyCartDrawer = () => {
             i18nKeyLabel="cartDrawer.keepShopping"
             label="Keep on shopping"
             onClick={handleKeepShopping}
-            status="warning"
+            status="primary"
           />
         </div>
       </div>

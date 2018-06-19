@@ -322,15 +322,16 @@ export const methods = {
    * @param {Boolean} returnToStock - condition to return product to stock
    * @return {Object} ret
    */
-  "orders/cancelOrder": function (order, returnToStock) {
+  "orders/cancelOrder": function (order, returnToStock, wallet = false) {
     check(order, Object);
     check(returnToStock, Boolean);
+    check(wallet, Boolean);
 
     // REVIEW: Only marketplace admins should be able to cancel entire order?
     // Unless order is entirely contained in a single shop? Do we need a switch on marketplace owner dashboard?
-    if (!Reaction.hasPermission("orders")) {
-      throw new Meteor.Error("access-denied", "Access Denied");
-    }
+    // if (!Reaction.hasPermission("orders")) {
+    //   throw new Meteor.Error("access-denied", "Access Denied");
+    // }
 
     if (!returnToStock) {
       ordersInventoryAdjust(order._id);
@@ -346,10 +347,19 @@ export const methods = {
     const itemIds = shipment.items.map((item) => {
       return item._id;
     });
-
+    if (wallet) {
+      if (order.workflow.status === "coreOrderWorkflow/processing") {
+        // If the product is already shipped, deduct tax and shipping fee before refunding.
+        const refundAmount = Number(invoiceTotal) - (Number(billingRecord.invoice.taxes) + Number(billingRecord.invoice.shipping));
+        Meteor.call("wallet/addToWallet", Math.round(refundAmount), order.userId);
+      } else {
+        const refundAmount = Number(invoiceTotal);
+        Meteor.call("wallet/addToWallet", Math.round(refundAmount), order.userId);
+      }
+    } else {
     // refund payment to customer
-    Meteor.call("orders/refunds/create", order._id, paymentMethod, Number(invoiceTotal));
-
+      Meteor.call("orders/refunds/create", order._id, paymentMethod, Number(invoiceTotal));
+    }
     // send notification to user
     const prefix = Reaction.getShopPrefix();
     const url = `${prefix}/notifications`;
@@ -374,6 +384,29 @@ export const methods = {
         "workflow.workflow": "coreOrderWorkflow/canceled"
       }
     });
+  },
+
+  "orders/getOrderStatus": function (orderID) {
+    check(orderID, String);
+    const result = Orders.findOne({
+      _id: orderID,
+      userId: Meteor.userId()
+    });
+    return result.workflow.status;
+  },
+
+  "orders/getAdminOrderStatus": function (orderID) {
+    check(orderID, String);
+    const result = Orders.findOne({
+      _id: orderID
+    });
+    return result.workflow.status;
+  },
+
+
+  "orders/removeOrder": function (orderID) {
+    check(orderID, String);
+    return Orders.remove(orderID);
   },
 
   /**
