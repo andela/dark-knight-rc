@@ -7,6 +7,12 @@ import { Reaction } from "/server/api";
 /**
  * accounts
  */
+// if (Meteor.isServer) {
+//   // This code only runs on the server
+//   Meteor.publish("reviews", function reviewPublication() {
+//     return Tasks.find();
+//   });
+// }
 
 Meteor.publish("Accounts", function (userId) {
   check(userId, Match.OneOf(String, null));

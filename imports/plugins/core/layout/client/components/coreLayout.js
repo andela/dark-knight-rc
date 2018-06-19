@@ -4,6 +4,7 @@ import classnames from "classnames";
 import { Components, registerComponent } from "@reactioncommerce/reaction-components";
 import Blaze from "meteor/gadicc:blaze-react-component";
 import { Template } from "meteor/templating";
+import { SocialContents } from "../../../ui/client/components";
 
 const CoreLayout = ({ actionViewIsOpen, structure }) => {
   const { layoutFooter, template } = structure || {};
@@ -19,15 +20,13 @@ const CoreLayout = ({ actionViewIsOpen, structure }) => {
 
       <Blaze template="cartDrawer" className="reaction-cart-drawer" />
 
-      { Template[template] &&
+      {Template[template] && (
         <main>
           <Blaze template={template} />
+          <SocialContents />
         </main>
-      }
-
-      { Template[layoutFooter] &&
-        <Blaze template={layoutFooter} className="reaction-navigation-footer footer-default" />
-      }
+      )}
+      {Template[layoutFooter] && <Blaze template={layoutFooter} className="reaction-navigation-footer footer-default" />}
     </div>
   );
 };

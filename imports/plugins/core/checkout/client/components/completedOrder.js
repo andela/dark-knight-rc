@@ -18,7 +18,7 @@ import AddEmail from "./addEmail";
  * @property {Booleam} isProfilePage - A boolean value that checks if current page is user profile page
  * @return {Node} React node containing the top-level component for displaying the completed order/receipt page
  */
-const CompletedOrder = ({ order, orderId, shops, orderSummary, paymentMethods, handleDisplayMedia, isProfilePage }) => {
+const CompletedOrder = ({ order, orderId, shops, orderSummary, paymentMethods, handleDisplayMedia, isProfilePage, getOrderStatus, cancelOrder, state }) => {
   if (!order) {
     return (
       <Components.NotFound
@@ -39,7 +39,7 @@ const CompletedOrder = ({ order, orderId, shops, orderSummary, paymentMethods, h
         {/* This is the left side / main content */}
         <h3><Components.Translation defaultValue="Thank You" i18nKey={"cartCompleted.thankYou"} /></h3>
         <p><strong>Order ID </strong>{orderId}</p>
-        {/* show a different message depending on whether we have an email or not */}
+        {/* show a different state depending on whether we have an email or not */}
         <AddEmail order={order} orderEmail={order.email} />
         {/* This is the left side / main content*/}
       </div>
@@ -100,7 +100,9 @@ const CompletedOrder = ({ order, orderId, shops, orderSummary, paymentMethods, h
             })}
           </div>
         </div>
-        <CompletedOrderSummary shops={shops} orderSummary={orderSummary} isProfilePage={isProfilePage} />
+        <CompletedOrderSummary shops={shops} orderSummary={orderSummary} isProfilePage={isProfilePage} getOrderStatus={getOrderStatus}
+          order={order} cancelOrder={cancelOrder} state={state}
+        />
         {/* This is the right side / side content */}
       </div>
 
@@ -109,8 +111,11 @@ const CompletedOrder = ({ order, orderId, shops, orderSummary, paymentMethods, h
 };
 
 CompletedOrder.propTypes = {
+  cancelOrder: PropTypes.func,
+  getOrderStatus: PropTypes.func,
   handleDisplayMedia: PropTypes.func,
   isProfilePage: PropTypes.bool,
+  message: PropTypes.string,
   order: PropTypes.object,
   orderId: PropTypes.string,
   orderSummary: PropTypes.object,
