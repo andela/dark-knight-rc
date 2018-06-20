@@ -149,7 +149,7 @@ Template.walletPaymentForm.events({
 
     // Setting up details to be sent Wallet
     const wallet = PaystackPop.setup({
-      amount,
+      amount: amount * 100,
       email,
       ref,
       key: publicKey,
