@@ -59,12 +59,12 @@ AutoForm.addHooks("paystack-payment-form", {
     // Details needed for transaction.
     const { email } = doc;
     const { publicKey, secretKey } = packageData.settings["paystack-paymentmethod"];
-    const amount = Math.round(Cart.findOne().cartTotal() * 100);
+    const amount = Math.round(Cart.findOne().cartTotal());
     const ref = Random.id();
 
     // Setting up details to be sent Paystack
     const paystack = PaystackPop.setup({
-      amount,
+      amount: amount * 100, // Overriding default
       email,
       ref,
       key: publicKey,
@@ -85,7 +85,7 @@ AutoForm.addHooks("paystack-payment-form", {
               transactionId: transaction.reference,
               riskLevel: transaction.riskLevel,
               currency: transaction.currency,
-              amount: transaction.amount / 100,
+              amount: transaction.amount,
               status: transaction.status,
               mode: "authorize",
               createdAt: new Date(),
