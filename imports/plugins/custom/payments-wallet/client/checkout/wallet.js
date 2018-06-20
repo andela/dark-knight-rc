@@ -62,6 +62,14 @@ Template.walletPaymentForm.helpers({
     return gBalance;
   },
   showTopUpButton: () => {
+    const amount = Cart.findOne().cartTotal();
+    Meteor.call("accounts/getWalletBalance", (err, balance) => {
+      if (Number(balance) < Number(amount)) {
+        gShowTopUpButton = true;
+      } else {
+        gShowTopUpButton = false;
+      }
+    });
     return gShowTopUpButton;
   }
 });
