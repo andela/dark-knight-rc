@@ -140,8 +140,6 @@ class NavBar extends Component {
         {this.renderTagNav()}
         {this.renderSearchButton()}
         {this.renderNotificationIcon()}
-        {this.renderLanguage()}
-        {this.renderCurrency()}
         {this.renderMainDropdown()}
         {this.renderCartContainerAndPanel()}
       </div>
