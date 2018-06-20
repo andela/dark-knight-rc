@@ -1105,6 +1105,7 @@ export const transferToFriendsWallet = (amount, email) => {
  * @param {Number} amount - amount to be withdrawn.
  */
 export const notifyWithdraw = (amount) => {
+  check(amount, amountValid);
   const user = Meteor.user();
   // send notification to order owner.
   const userId = user._id;

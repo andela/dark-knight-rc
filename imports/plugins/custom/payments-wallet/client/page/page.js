@@ -163,6 +163,7 @@ Template.walletPage.events({
                   // Show toast of successful payment.
                   Alerts.toast("Payment completed successfully", "success");
 
+                  // Reload page.
                   setTimeout(() => document.location.reload(true), 1000);
                 }
               });
