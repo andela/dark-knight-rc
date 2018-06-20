@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { registerComponent } from "@reactioncommerce/reaction-components";
 import DisplayReportCard from "./card/DisplayReportCard";
@@ -5,14 +6,14 @@ import { formatPriceString } from "/client/api";
 import Chart from "./charts/Charts";
 
 
-export const Overview = ({ displayPieChart, pieChartData, showSalesChart, displaySales, displaySalesChart, displayOrderChart, displayCancelledOrder, displayPurchaseProduct, handleDisplayChart, selectedReport, salesArray, totalSales, cancelledOrder, totalPurchasedProduct, totalOrders }) => {
+export const Overview = ({ displayPieChart,
+  pieChartData, showSalesChart, displaySales,
+  displaySalesChart, displayOrderChart, displayCancelledOrder,
+  displayPurchaseProduct, handleDisplayChart, selectedReport,
+  salesArray, totalSales, cancelledOrder, totalPurchasedProduct, totalOrders }) => {
   const covObjArr = [];
   const salesHist = [];
-  // const pieData = [];
 
-  // Object.keys(pieChartData).map(key => {
-  //   pieData.push(pieChartData[key]);
-  // });
 
   Object.keys(displaySales).map(key => {
     salesHist.push(displaySales[key]);
@@ -70,7 +71,6 @@ export const Overview = ({ displayPieChart, pieChartData, showSalesChart, displa
           </div>
         </div>
         <div className="col-md-6">
-        
           <Chart
             data={covObjArr}
             displaySalesChart = {displaySalesChart}

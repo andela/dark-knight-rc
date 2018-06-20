@@ -76,7 +76,6 @@ vsivsi:job-collection@=1.4.0
 react-meteor-data@=0.2.9
 percolate:migrations
 gadicc:blaze-react-component
-meteortoys:allthings
 
 # Testing packages
 dburles:factory
