@@ -1,0 +1,31 @@
+.rui.navbar {
+  .display(flex);
+  .align-items(center);
+  font-family: 'Roboto';
+  background-color: @navbar-default-bg;
+  color: @navbar-default-link-color;
+  border-radius: 0;
+  border: 0;
+}
+.rui.btn-default.flat {
+  color: white;
+  background-color: transparent;
+  border-color: transparent;
+}
+.rui.navbar .dropdown a {
+  color: @black;
+}
+.rui.tagnav .navbar-item .dropdown-container a {
+  color: @black;
+}
+.rui.tagnav .navbar-item.selected .dropdown-container {
+  display: block;
+  position: absolute;
+  top: 55px;
+  left: 0;
+  z-index: 1000;
+  width: auto;
+  /* max-width: none; */
+  margin: 0;
+  background-color: #ffffff;
+}

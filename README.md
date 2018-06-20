@@ -1,5 +1,5 @@
 # Reaction Commerce
-
+[![CircleCI](https://circleci.com/gh/andela/dark-knight-rc.svg?style=svg)](https://circleci.com/gh/andela/dark-knight-rc)
 [![bitHound Overall Score](https://www.bithound.io/github/reactioncommerce/reaction/badges/score.svg)](https://www.bithound.io/github/reactioncommerce/reaction) [![bitHound Dev Dependencies](https://www.bithound.io/github/reactioncommerce/reaction/badges/devDependencies.svg)](https://www.bithound.io/github/reactioncommerce/reaction/9a858eb459d7260d5ae59124c2b364bc791a3e70/dependencies/npm) [![bitHound Code](https://www.bithound.io/github/reactioncommerce/reaction/badges/code.svg)](https://www.bithound.io/github/reactioncommerce/reaction) [![Circle CI](https://circleci.com/gh/reactioncommerce/reaction.svg?style=svg)](https://circleci.com/gh/reactioncommerce/reaction) [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/reactioncommerce/reaction?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [Reaction](http://reactioncommerce.com) is an event-driven, real-time reactive commerce platform built with JavaScript (ES6). It plays nicely with npm, Docker, and React.
@@ -89,7 +89,7 @@ We ensure that all releases are deployable as [Docker](https://hub.docker.com/r/
 
 ## Reaction Platform
 
-We also offer [Reaction Platform](https://reactioncommerce.com/hosting), a managed deployment platform integrated with the Reaction command line. 
+We also offer [Reaction Platform](https://reactioncommerce.com/hosting), a managed deployment platform integrated  the Reaction command line. 
 
 ### License
 
