@@ -164,6 +164,8 @@ class SearchModal extends Component {
               <option value="oldest">Oldest</option>
               <option value="newest">Newest</option>
               <option value="price">Price</option>
+              <option value="highest rating">Highest rating</option>
+              <option value="least rating">Lowest rating</option>
             </select>
           </div>
         </div>

@@ -41,7 +41,8 @@ getResults.products = function (searchTerm, facets, maxResults, userId) {
         isLowQuantity: 1,
         isBackorder: 1,
         createdAt: 1,
-        vendor: 1
+        vendor: 1,
+        averageRating: 1
       },
       sort: { score: { $meta: "textScore" } },
       limit: maxResults
