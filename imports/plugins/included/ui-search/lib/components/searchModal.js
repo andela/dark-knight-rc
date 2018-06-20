@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Reaction } from "/client/api";
+import { ProductSearch } from "/lib/collections";
 import { TextField, Button, IconButton, SortableTableLegacy } from "@reactioncommerce/reaction-ui";
 import ProductGridContainer from "/imports/plugins/included/product-variant/containers/productGridContainer";
 import { accountsTable } from "../helpers";
@@ -11,13 +12,20 @@ class SearchModal extends Component {
     handleAccountClick: PropTypes.func,
     handleChange: PropTypes.func,
     handleClick: PropTypes.func,
+    handlePriceSelect: PropTypes.func,
+    handleSortSelect: PropTypes.func,
     handleTagClick: PropTypes.func,
     handleToggle: PropTypes.func,
+    handleVendorSelect: PropTypes.func,
+    priceQuery: PropTypes.string,
     products: PropTypes.array,
     siteName: PropTypes.string,
+    sortQuery: PropTypes.object,
+    sortValue: PropTypes.string,
     tags: PropTypes.array,
     unmountMe: PropTypes.func,
-    value: PropTypes.string
+    value: PropTypes.string,
+    vendorQuery: PropTypes.string
   }
 
   renderSearchInput() {
@@ -90,6 +98,81 @@ class SearchModal extends Component {
     );
   }
 
+  renderSortFilter() {
+    const getVendors = () => {
+      const products = ProductSearch.find();
+      const vendors = [];
+      products.map(product => {
+        vendors.push(product.vendor);
+      });
+      const uniqueVendors = [...new Set(vendors)];
+      return uniqueVendors;
+    };
+
+    const renderVendors = () => {
+      const vendors = getVendors();
+      return vendors.map(vendor => <option key={vendor} value={vendor}>{vendor}</option>);
+    };
+
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="form-group col-sm-4">
+            <label htmlFor="sel1" style={{ fontSize: "12px" }}>Filter By Price:</label>
+            <select
+              className="form-control"
+              id="sel1"
+              onChange={this.props.handlePriceSelect}
+              value={this.props.priceQuery}
+            >
+              <option value="0 - 100000">ALL</option>
+              <option value="0 - 100">0 - 100</option>
+              <option value="100 - 200">100 - 200</option>
+              <option value="200 - 300">200 - 300</option>
+              <option value="300 - 400">300 - 400</option>
+              <option value="400 - 500">400 - 500</option>
+              <option value="500 - 600">500 - 600</option>
+              <option value="600 - 700">600 - 700</option>
+              <option value="700 - 800">700 - 800</option>
+              <option value="800 - 900">800 - 900</option>
+              <option value="900 - 1000">900 - 1000</option>
+            </select>
+          </div>
+
+          <div className="form-group col-sm-4">
+            <label htmlFor="sel1" style={{ fontSize: "12px" }}>Filter By Brand:</label>
+            <select
+              className="form-control"
+              id="sel1"
+              onChange={this.props.handleVendorSelect}
+              value={this.props.vendorQuery}
+            >
+              <option value="">ALL</option>
+              {renderVendors()}
+            </select>
+          </div>
+
+          <div className="form-group col-sm-4">
+            <label htmlFor="sel1" style={{ fontSize: "12px" }}>Sort:</label>
+            <select
+              className="form-control"
+              id="sel1"
+              onChange={this.props.handleSortSelect}
+              value={this.props.sortValue}
+            >
+              <option value="">Default</option>
+              <option value="oldest">Oldest</option>
+              <option value="newest">Newest</option>
+              <option value="price">Price</option>
+              <option value="highest rating">Highest rating</option>
+              <option value="least rating">Lowest rating</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -99,6 +182,7 @@ class SearchModal extends Component {
           {this.renderSearchTypeToggle()}
           {this.props.tags.length > 0 && this.renderProductSearchTags()}
         </div>
+        <div className="rui search-modal-filter">{this.renderSortFilter()}</div>
         <div className="rui search-modal-results-container">
           {this.props.products.length > 0 &&
             <ProductGridContainer

@@ -14,7 +14,8 @@ class Review extends Component {
       reviewSuccess: false,
       addComment: false,
       ratings: null,
-      comment: ""
+      comment: "",
+      averageRating: 0
     };
   }
   // componentDidMount() {
@@ -67,7 +68,7 @@ class Review extends Component {
     const { ratings, comment } = this.state;
     const productId = Reaction.Router.getParam("handle");
     const rate = Math.floor(ratings);
-    const { name } = Meteor.user();
+    const name  = Meteor.user().name || "Anonymous";
 
     Meteor.call("review/add", comment, rate, productId, name, (err, result) => {
       if (err) {
@@ -76,6 +77,17 @@ class Review extends Component {
         console.log(result);
         this.setState({ reviewSuccess: true, ratings: null, comment: "" });
         setTimeout(() => {this.setState({ reviewSuccess: false });}, 3000);
+      }
+    });
+
+    // compute average, then use the result to update the product table
+    Meteor.call("review/computeAverage", productId, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else{
+        this.setState({ averageRating: result });
+        localStorage.setItem("averageRating", result);
+        Meteor.call("review/setAverage", productId, this.state.averageRating);
       }
     });
 
