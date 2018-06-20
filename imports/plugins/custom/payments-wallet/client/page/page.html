@@ -1,0 +1,62 @@
+<template name="walletPage">
+  <div class="w-page-container">
+    <div class="w-header">Balance: ₦{{getWalletBalance}}</div>
+
+    <div class="w-content-container">
+
+      <!-- FUND WALLET CARD -->
+      <div class="w-card">
+        <div class="w-top-container">
+          <div class="w-title">FUND WALLET</div>
+          <div class="w-image-container">
+            <img class="w-image" src="/resources/fund.svg" alt="fund-wallet-image"/>
+          </div>
+          <div class="w-detail">
+            Short of funds? <br/> Boost ur wallet now with just your card or financial details.
+          </div>
+        </div>
+        <div class="w-input-container">
+            <input name="fundEmail" type="email" class="w-input" placeholder="email"/>
+            <input name="fundAmount" type="number" class="w-input" placeholder="amount"/>
+        </div>
+        <button class="w-button" id="fundButton">TOP UP</button>
+      </div>
+
+      <!-- WITHDRAW FROM WALLET CARD -->
+      <div class="w-card">
+        <div class="w-top-container">
+          <div class="w-title">WITHDRAW FROM WALLET</div>
+          <div class="w-image-container">
+            <img class="w-image" src="/resources/withdraw.svg" alt="withdraw-fund-image"/>
+          </div>
+          <div class="w-detail">
+            Need your money back? Withdrawing is easy.
+            <div class="w-footer-message">Due to our current <a href="#">policy</a>, we deduct 10% of every withdrawal.</div>
+          </div>
+        </div>
+        <div class="w-input-container">
+            <input id="withdrawAmount" name="withdrawAmount" type="number" class="w-input" placeholder="amount"/>
+        </div>
+        <button class="w-button" id="withdrawButton">WITHDRAW</button>
+      </div>
+
+      <!-- TRANSFER FUND CARD -->
+      <div class="w-card">
+        <div class="w-top-container">
+          <div class="w-title">TRANSFER FUND</div>
+          <div class="w-image-container">
+            <img class="w-image" src="/resources/transfer.svg" alt="transfer-fund-image"/>
+          </div>
+          <div class="w-detail">
+            With the single click of a button, you can send funds to your friends. <br/> Sharing has never been easier.
+          </div>
+        </div>
+        <div class="w-input-container">
+            <input id="transferEmail" name="transferEmail" type="email" class="w-input" placeholder="email"/>
+            <input id="transferAmount" name="transferAmount" type="number" class="w-input" placeholder="amount"/>
+        </div>
+        <button class="w-button" id="transferButton">TRANSFER</button>
+      </div>
+    </div>
+  </div>
+</template>
