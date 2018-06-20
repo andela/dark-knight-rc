@@ -1,0 +1,22 @@
+<template name="landingPage">
+  {{#if isAdmin}}
+    <div>
+        {{> React component=getProductList}}
+    </div>
+  {{else}}
+    <div class="first-page">
+    <div>
+        {{> React getCarousel}}
+    </div>
+    <div>
+      {{> React getTopProducts}}
+    </div>
+    <div>
+        {{> React getTestimony}}
+    </div>
+    </diV>
+    <div class="landing-footer">
+      {{> React getFooter}}
+    </div>
+  {{/if}}
+</template>
