@@ -1036,6 +1036,9 @@ export const getWalletBalance = () => {
 // Checks
 const amountValid = Match.Where((amount) => !isNaN(amount) && amount > 0);
 const userHasAmount = Match.Where((amount) => getWalletBalance() >= amount);
+// eslint-disable-next-line max-len
+const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailValid = Match.Where((email) => regex.test(String(email).toLowerCase()));
 
 /**
  * @name accounts/addToWallet
@@ -1045,7 +1048,11 @@ const userHasAmount = Match.Where((amount) => getWalletBalance() >= amount);
  * @param {Number} amount - amount to be added.
  */
 export const addToWallet = (amount) => {
-  check(amount, amountValid);
+  try {
+    check(amount, amountValid);
+  } catch (err) {
+    throw new Meteor.Error(400, "The amount entered is not valid!");
+  }
   const user = Meteor.user();
   Accounts.update({ _id: user._id }, {
     $inc: {
@@ -1062,8 +1069,16 @@ export const addToWallet = (amount) => {
  * @param {Number} amount - amount to be deducted.
  */
 export const deductFromWallet = (amount) => {
-  check(amount, amountValid);
-  check(amount, userHasAmount);
+  try {
+    check(amount, amountValid);
+  } catch (err) {
+    throw new Meteor.Error(400, "The amount entered is not valid!");
+  }
+  try {
+    check(amount, userHasAmount);
+  } catch (err) {
+    throw new Meteor.Error(400, "Nice try! You don't have that much lol.");
+  }
   const user = Meteor.user();
   Accounts.update({ _id: user._id }, {
     $inc: {
@@ -1081,19 +1096,37 @@ export const deductFromWallet = (amount) => {
  * @param {String} email - recipient's email.
  */
 export const transferToFriendsWallet = (amount, email) => {
-  check(amount, amountValid);
-  check(amount, userHasAmount);
+  try {
+    check(amount, amountValid);
+  } catch (err) {
+    throw new Meteor.Error(400, "The amount entered is not valid!");
+  }
+  try {
+    check(amount, userHasAmount);
+  } catch (err) {
+    throw new Meteor.Error(400, "Nice try! You don't have that much lol.");
+  }
+  try {
+    check(email, emailValid);
+  } catch (err) {
+    throw new Meteor.Error(400, "That email is invalid!");
+  }
   const user = Meteor.user();
-  Accounts.update({ emails: { $elemMatch: { address: email } } }, {
-    $inc: {
-      walletBalance: Number(amount)
-    }
-  });
-  Accounts.update({ _id: user._id }, {
-    $inc: {
-      walletBalance: -Number(amount)
-    }
-  });
+  const account = Accounts.findOne({ emails: { $elemMatch: { address: email } } });
+  if (!account) {
+    throw new Meteor.Error(400, "The user email you specified does not exist!");
+  } else {
+    Accounts.findOne({ emails: { $elemMatch: { address: email } } }, {
+      $inc: {
+        walletBalance: Number(amount)
+      }
+    });
+    Accounts.update({ _id: user._id }, {
+      $inc: {
+        walletBalance: -Number(amount)
+      }
+    });
+  }
 };
 
 
@@ -1105,7 +1138,11 @@ export const transferToFriendsWallet = (amount, email) => {
  * @param {Number} amount - amount to be withdrawn.
  */
 export const notifyWithdraw = (amount) => {
-  check(amount, amountValid);
+  try {
+    check(amount, amountValid);
+  } catch (err) {
+    throw new Meteor.Error(400, "The amount is invalid!");
+  }
   const user = Meteor.user();
   // send notification to order owner.
   const userId = user._id;
