@@ -106,15 +106,6 @@ class PaystackSettingsForm extends Component {
             />
           </div>
 
-          {/* <div>
-            <select
-              name="settings.express_mode"
-              type="boolean-select"
-              trueLabel="Live - Production Mode"
-              falseLabel="Testing - Sandbox Mode"
-            />
-          </div> */}
-
           <button className="btn btn-primary pull-right" type="submit">
             <Translation defaultValue="Save Changes" i18nKey="app.saveChanges"/>
           </button>

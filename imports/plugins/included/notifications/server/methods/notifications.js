@@ -36,7 +36,9 @@ Meteor.methods({
       forAdmin: "You have a new order.",
       orderDelivered: "Your order has been delivered.",
       orderProcessing: "Your order is being processed.",
-      orderShipped: "Your order has been shipped."
+      orderShipped: "Your order has been shipped.",
+      userWithdrawal: "Your wallet withdrawal is being processed.",
+      adminWithdrawal: "User wants to withdraw; check email for more details."
     };
 
     if (userId && type && url) {

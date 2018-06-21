@@ -1,0 +1,28 @@
+<template name="walletPaymentForm">
+  <div class="w-checkout-title">Pay With Wallet</div>
+
+  <div class="w-input-container checkout">
+    <div class="w-checkout-text"><div class="w-label">₦ {{getWalletBalance}}</div> in Wallet</div>
+    <div class="w-checkout-text"><div class="w-label">₦ {{getTotal}}</div> to be deducted from Wallet</div>
+  </div>
+
+  {{#if showTopUpButton}}
+  <div id="topUp">
+    <div class="w-input-container">
+        <input id="transferEmail" type="email" class="w-input" placeholder="email"/>
+        <input id="transferAmount" type="number" class="w-input" placeholder="amount"/>
+        <button class="w-button checkout" id="topUpButton">TOP UP WALLET</button>
+    </div>
+  </div>
+  {{else}}
+  <div id="completeOrder">
+    <div class="w-input-container">
+      <button type="submit" id="completeOrderButton" class="w-button checkout">
+        <span id="btn-complete-order" data-i18n="checkoutPayment.completeYourOrder">COMPLETE ORDER</span>
+        <i class="fa fa-spinner fa-spin hidden" id="btn-processing"></i>
+      </button>
+    </div>
+  </div>
+  {{/if}}
+  <div class="alert alert-danger hidden">Oh! Snap!</div>
+</template>

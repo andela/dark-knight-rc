@@ -1019,6 +1019,123 @@ export function createFallbackLoginToken() {
   }
 }
 
+/**
+ * @name accounts/getWalletBalance
+ * @memberof Methods/Accounts
+ * @method
+ * @summary Get the balance in user's wallet.
+ * @returns {Number} - returns the blance.
+ */
+export const getWalletBalance = () => {
+  const user = Meteor.user();
+  const account = Accounts.findOne({ _id: user._id });
+  const balance = account.walletBalance.toFixed(2);
+  return balance;
+};
+
+// Checks
+const amountValid = Match.Where((amount) => !isNaN(amount) && amount > 0);
+const userHasAmount = Match.Where((amount) => getWalletBalance() >= amount);
+
+/**
+ * @name accounts/addToWallet
+ * @memberof Methods/Accounts
+ * @method
+ * @summary Add specified amount to user's wallet.
+ * @param {Number} amount - amount to be added.
+ */
+export const addToWallet = (amount) => {
+  check(amount, amountValid);
+  const user = Meteor.user();
+  Accounts.update({ _id: user._id }, {
+    $inc: {
+      walletBalance: Number(amount)
+    }
+  });
+};
+
+/**
+ * @name accounts/deductFromWallet
+ * @memberof Methods/Accounts
+ * @method
+ * @summary Deduct specified amount from user's wallet.
+ * @param {Number} amount - amount to be deducted.
+ */
+export const deductFromWallet = (amount) => {
+  check(amount, amountValid);
+  check(amount, userHasAmount);
+  const user = Meteor.user();
+  Accounts.update({ _id: user._id }, {
+    $inc: {
+      walletBalance: -Number(amount)
+    }
+  });
+};
+
+/**
+ * @name accounts/transferToFriendsWallet
+ * @memberof Methods/Accounts
+ * @method
+ * @summary Transfer specified amount from user's wallet to specified user's wallet.
+ * @param {Number} amount - amount to be sent.
+ * @param {String} email - recipient's email.
+ */
+export const transferToFriendsWallet = (amount, email) => {
+  check(amount, amountValid);
+  check(amount, userHasAmount);
+  const user = Meteor.user();
+  Accounts.update({ emails: { $elemMatch: { address: email } } }, {
+    $inc: {
+      walletBalance: Number(amount)
+    }
+  });
+  Accounts.update({ _id: user._id }, {
+    $inc: {
+      walletBalance: -Number(amount)
+    }
+  });
+};
+
+
+/**
+ * @name accounts/notifyWithdraw
+ * @memberof Methods/Accounts
+ * @method
+ * @summary Transfer specified amount from user's wallet to specified user's wallet.
+ * @param {Number} amount - amount to be withdrawn.
+ */
+export const notifyWithdraw = (amount) => {
+  check(amount, amountValid);
+  const user = Meteor.user();
+  // send notification to order owner.
+  const userId = user._id;
+  const userType = "userWithdrawal";
+  const prefix = Reaction.getShopPrefix();
+  const url = `${prefix}/notifications`;
+  const sms = false;
+  Meteor.call("notification/send", userId, userType, url, sms);
+
+  // Send notification to admin as well.
+  const admin = Meteor.users.findOne({
+    "roles.__global_roles__": "owner"
+  });
+  const adminType = "adminWithdrawal";
+  Meteor.call("notification/send", admin._id, adminType, url, sms);
+
+  // Send admin an email as well.
+  Reaction.Email.send({
+    to: Reaction.getShopEmail(),
+    from: "steveakinyemi@gmail.com",
+    subject: "User wants to withdraw funds from wallet",
+    html: `<div>
+    <em>User with the following details need to withdraw ${Number(amount)} from his wallet.</em>
+    <br/>| Name: ${user.username}
+    <br/>| Email: ${user.emails[0].address}
+    <br/>| Id: ${user._id}
+    </div>`
+  });
+};
+
 Meteor.methods({
   "accounts/verifyAccount": verifyAccount,
   "accounts/validateAddress": validateAddress,
@@ -1034,5 +1151,10 @@ Meteor.methods({
   "accounts/setUserPermissions": setUserPermissions,
   "accounts/createFallbackLoginToken": createFallbackLoginToken,
   "accounts/updateEmailAddress": updateEmailAddress,
-  "accounts/removeEmailAddress": removeEmailAddress
+  "accounts/removeEmailAddress": removeEmailAddress,
+  "accounts/getWalletBalance": getWalletBalance,
+  "accounts/addToWallet": addToWallet,
+  "accounts/deductFromWallet": deductFromWallet,
+  "accounts/transferToFriendsWallet": transferToFriendsWallet,
+  "accounts/notifyWithdraw": notifyWithdraw
 });
