@@ -63,7 +63,7 @@
     "immutable": "3.8.2",
     "intro.js": "2.9.3",
     "intro.js-react": "0.2.0",
-    "is-touch-device": "^1.0.1",
+    "is-touch-device": "1.0.1",
     "jquery-i18next": "1.2.0",
     "later": "1.2.0",
     "lodash": "4.17.4",

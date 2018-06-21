@@ -1,0 +1,9 @@
+<template name="staticPageDisplay">
+    <div class="container">
+        {{#each showStaticPageDetails pageAddress }}
+        <h1 class="text-center">{{pageName}}</h1>
+        <hr/>
+        <p> {{{pageContent}}}</p>
+        {{/each}}
+    </div>
+</template>
