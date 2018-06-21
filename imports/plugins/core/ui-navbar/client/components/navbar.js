@@ -86,6 +86,12 @@ class NavBar extends Component {
     }
   }
 
+  renderStaticPage() {
+    return (
+      <Components.StaticPagesComponent />
+    );
+  }
+
   renderNotificationIcon() {
     if (this.props.hasProperPermission) {
       return (
@@ -140,6 +146,7 @@ class NavBar extends Component {
         {this.renderTagNav()}
         {this.renderSearchButton()}
         {this.renderNotificationIcon()}
+        {this.renderStaticPage()}
         {this.renderMainDropdown()}
         {this.renderCartContainerAndPanel()}
       </div>

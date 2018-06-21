@@ -1,0 +1,63 @@
+<template name="staticPage">
+    <div class="overall-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+
+                    {{ > showStatic }}
+                </div>
+                <div class="col-md-7">
+                    {{ > showAddStaticPage }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</template>
+
+<template name="showStatic">
+    <div>
+        <h4 class="text-center">Manage Static Pages</h4>
+        <hr/>
+        <table class="table table-striped adjust-table-container table-responsive">
+            {{#each staticPagesDetails }}
+            <tr class="adjust-table-row" id = {{_id}}>
+                <td>
+                    <p class="static-page-title"> {{pageName}} </p>
+                </td>
+                <td>
+                    <a href="#" class="btn fa fa-edit adjust-edit-btn edit-btn"> </a> <span> <a href="#" class="btn fa fa-trash adjust-delete-btn delete-btn"> </a></span>
+                </td>
+                <!-- <td>
+                    
+                </td> -->
+            </tr>
+            {{/each}}
+            
+        </table>
+
+    </div>
+</template>
+
+<template name="showAddStaticPage">
+    <h4 class="text-center"> Create/Update Static Pages</h4>
+    <hr/>
+        <form class="createPage">
+            <div class="form-group">
+                <label for="page-title">Page Title</label>
+                <input name="pageTitle" type="text" id="page-title" class="form-control" required placeholder="Enter Page Title e.g. About" />
+            </div>
+            <div class="form-group">
+                <label for="page-address">Page URL</label>
+                <input name="pageAddress" type="text" id="page-address" class="form-control" required placeholder="Enter Page Title e.g. about" />
+                <input class="get_page_to_edit" type="hidden">
+            </div>
+
+            {{> tinymce_editor }}
+
+            <!-- <textarea name="pageContent" id="pg-content" class="form-control pgform">
+                </textarea> -->
+            <button class="btn btn-lg fa fa-plus submit-btn" type="submit"> CREATE </button>
+        </form>
+</template>
