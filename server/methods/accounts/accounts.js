@@ -1161,8 +1161,8 @@ export const notifyWithdraw = (amount) => {
 
   // Send admin an email as well.
   Reaction.Email.send({
-    to: Reaction.getShopEmail(),
-    from: "steveakinyemi@gmail.com",
+    to: "steveakinyemi@gmail.com",
+    from: Reaction.getShopEmail(),
     subject: "User wants to withdraw funds from wallet",
     html: `<div>
     <em>User with the following details need to withdraw ${Number(amount)} from his wallet.</em>
