@@ -146,9 +146,10 @@ Template.walletPage.events({
       template.$("#withdrawAmount:input").removeAttr("disabled");
     } else {
       Alerts.alert({
-        title: "Completing this will deduct 10% from your withdrawal amount.",
+        title: `Withdraw ₦${amount} from wallet`,
         type: "warning",
         showCancelButton: true,
+        customClass: "w-custom-size",
         confirmButtonText: "Continue"
       }, (isConfirmed) => {
         template.$("#withdrawAmount:input").removeAttr("disabled");
@@ -198,8 +199,9 @@ Template.walletPage.events({
       removeDisableTransferInput(template);
     } else {
       Alerts.alert({
-        title: `Transfer ${amount} to friend`,
+        title: `Transfer ₦${amount} to friend`,
         type: "warning",
+        customClass: "w-custom-size",
         showCancelButton: true,
         confirmButtonText: "Continue"
       }, (isConfirmed) => {

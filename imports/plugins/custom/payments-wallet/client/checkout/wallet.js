@@ -91,8 +91,9 @@ Template.walletPaymentForm.events({
     const currency = Shops.findOne({ _id: Reaction.getShopId() }).currency;
 
     Alerts.alert({
-      title: "Completing this order would deduct from your wallet.",
+      title: `Debit ₦${amount} from wallet`,
       type: "warning",
+      customClass: "w-custom-size",
       showCancelButton: true,
       confirmButtonText: "Continue"
     }, (isConfirmed) => {

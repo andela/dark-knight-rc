@@ -12,7 +12,8 @@ import ShopOrderSummary from "./shopOrderSummary";
  * @property {boolean} isProfilePage - Checks if current page is Profile Page
  * @return {Node} React node containing the order summary broken down by shop
  */
-const CompletedOrderSummary = ({ shops, orderSummary, isProfilePage }) => {
+let tempOrder = {};
+const CompletedOrderSummary = ({ shops, orderSummary, isProfilePage, getOrderStatus, order, cancelOrder, state }) => {
   return (
     <div>
       <div className="order-details-content-title">
@@ -43,9 +44,31 @@ const CompletedOrderSummary = ({ shops, orderSummary, isProfilePage }) => {
           </div>
         </div>
         <div style={{ padding: "25px 15px" }}>
-          <button className="btn btn-success" onClick={() => { print(); }} data-toggle="modal" data-target="#myModal">Print Details</button>
+          <button className="btn btn-danger" onClick={() => {getOrderStatus(order._id); tempOrder = order;}} data-toggle="modal" data-target="#myModal">Cancel order</button>
         </div>
-        {/* Cancel Order Button */}
+      </div>
+
+
+      <div className="modal fade" id="myModal" role="dialog" style={{ borderRadius: 0 }}>
+        <div className="modal-dialog">
+
+          <div className="modal-content" style={{ width: 350, borderRadius: 0 }}>
+            <div className="modal-header">
+              <button type="button" className="close" data-dismiss="modal">&times;</button>
+              <h4 className="modal-title" style={{ textAlign: "center" }}>Cancel Order</h4>
+            </div>
+            <div className="modal-body">
+              <p style={{ textAlign: "center" }}>{state.message}</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-success" onClick={() => cancelOrder(tempOrder)} data-dismiss="modal"
+                disabled={state.completed ? true : false}
+              >Accept</button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );
