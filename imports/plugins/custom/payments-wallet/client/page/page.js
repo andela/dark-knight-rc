@@ -52,6 +52,11 @@ Template.walletPage.helpers({
   }
 });
 
+const removeDisableTransferInput = (template) => {
+  template.$("#transferAmount:input").removeAttr("disabled");
+  template.$("#transferEmail:input").removeAttr("disabled");
+};
+
 Template.walletPage.events({
   "click #fundButton": (event, template) => {
     event.preventDefault();
@@ -174,8 +179,47 @@ Template.walletPage.events({
     }
   },
 
-  "click #transferButton": () => {
-    /* eslint-disable-next-line no-console */
-    console.log("transferButton clicked!");
+  "click #transferButton": (event, template) => {
+    event.preventDefault();
+    template.$("#transferAmount:input").attr("disabled", true);
+    template.$("#transferEmail:input").attr("disabled", true);
+
+    // Details needed for transaction.
+    const email = $("input[name='transferEmail']").val();
+    const amount = Number($("input[name='transferAmount']").val());
+    const balance = gBalance;
+
+    // Sanity checks.
+    if (!amount || amount === 0) {
+      Alerts.toast("You have to specify an amount!", "error");
+      removeDisableTransferInput(template);
+    } else if (balance < amount) {
+      Alerts.toast("You don't have that much funds in your wallet!", "error");
+      removeDisableTransferInput(template);
+    } else {
+      Alerts.alert({
+        title: `Transfer ${amount} to friend`,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Continue"
+      }, (isConfirmed) => {
+        removeDisableTransferInput(template);
+        if (isConfirmed) {
+          // Transfer fund from wallet.
+          Meteor.call("accounts/transferToFriendsWallet", amount, email, (error) => {
+            if (error) {
+              // Show error message.
+              Alerts.toast(error.message, "error");
+            } else {
+              // Show toast of successful payment.
+              Alerts.toast("Transfer completed successfully", "success");
+
+              // Reload page.
+              setTimeout(() => document.location.reload(true), 1000);
+            }
+          });
+        }
+      });
+    }
   }
 });
