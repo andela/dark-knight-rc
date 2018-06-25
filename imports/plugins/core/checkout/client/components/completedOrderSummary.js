@@ -26,25 +26,30 @@ const CompletedOrderSummary = ({ shops, orderSummary, isProfilePage, getOrderSta
         })}
         <hr />
         {orderSummary.discounts > 0 &&
-        <div className="order-summary-line">
-          <div className="order-summary-discount-title">
-            <Components.Translation defaultValue="Discount Total" i18nKey={"cartCompleted.discountTotal"}/>
+          <div className="order-summary-line">
+            <div className="order-summary-discount-title">
+              <Components.Translation defaultValue="Discount Total" i18nKey={"cartCompleted.discountTotal"} />
+            </div>
+            <div className="order-summary-discount-value">
+              <Components.Currency amount={orderSummary.discounts} />
+            </div>
           </div>
-          <div className="order-summary-discount-value">
-            <Components.Currency amount={orderSummary.discounts}/>
-          </div>
-        </div>
         }
         <div className="order-summary-line">
           <div className="order-summary-total-title">
-            <Components.Translation defaultValue="Order Total" i18nKey={"cartCompleted.orderTotal"}/>
+            <Components.Translation defaultValue="Order Total" i18nKey={"cartCompleted.orderTotal"} />
           </div>
           <div className="order-summary-total-value">
-            <Components.Currency amount={orderSummary.total}/>
+            <Components.Currency amount={orderSummary.total} />
           </div>
         </div>
         <div style={{ padding: "25px 15px" }}>
-          <button className="btn btn-danger" onClick={() => {getOrderStatus(order._id); tempOrder = order;}} data-toggle="modal" data-target="#myModal">Cancel order</button>
+          {state ?
+            <button className="btn btn-danger" onClick={() => { getOrderStatus(order._id); tempOrder = order; }}
+              data-toggle="modal" data-target="#myModal"
+            >Cancel order</button>
+            :
+            <button className="btn btn-success" onClick={() => { print(); }}>Print details</button>}
         </div>
       </div>
 
@@ -58,12 +63,13 @@ const CompletedOrderSummary = ({ shops, orderSummary, isProfilePage, getOrderSta
               <h4 className="modal-title" style={{ textAlign: "center" }}>Cancel Order</h4>
             </div>
             <div className="modal-body">
-              <p style={{ textAlign: "center" }}>{state.message}</p>
+              <p style={{ textAlign: "center" }}>{state ? state.message : ""}</p>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
               <button type="button" className="btn btn-success" onClick={() => cancelOrder(tempOrder)} data-dismiss="modal"
-                disabled={state.completed ? true : false}
+                /* eslint-disable-next-line no-nested-ternary */
+                disabled={state ? (state.completed ? true : false) : false}
               >Accept</button>
             </div>
           </div>
