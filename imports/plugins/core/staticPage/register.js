@@ -7,9 +7,7 @@ Reaction.registerPackage({
   registry: [
     {
       route: "/static-pages/:staticPageAddress",
-      name: "static-page",
-      // permissions: ["admin", "guest", "anonymous"],
-      // audience: ["anonymous", "guest"],
+      name: "Information",
       workflow: "coreStaticPagesWorkflow",
       template: "staticPageDisplay"
     }

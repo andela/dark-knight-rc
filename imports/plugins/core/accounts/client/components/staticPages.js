@@ -18,7 +18,7 @@ class StaticPagesComponent extends React.Component {
       return (
         <div className="static-page dropdown" role="menu" data-delay="1000">
           <div className="dropdown-toggle tog" data-toggle="dropdown">
-          Contact
+          Information
             <span className="caret" />
           </div>
           <ul className="dropdown-menu">

@@ -27,14 +27,14 @@ export const Overview = ({ displayPieChart,
   return (
     <div className="text-center" style= {{ display: selectedReport === "ShowRetailerDashBoard" ? "block" : "none" }}>
       <h1> Overview </h1>
-      <div className="row container">
+      <div className="row container adjust-overview-content">
         <div className="col-md-6">
           <div className="row">
             <div className="col-md-6">
               <DisplayReportCard
                 title="Total Sales"
                 amount={formatPriceString(totalSales)}
-                ReportIcon = "fa fa-cart-plus adjust-cart"
+                ReportIcon = "fa fa-cart-plus adjust-cart adjust-sale-card"
                 id="totalSales"
                 handleDisplayChart = {handleDisplayChart}
               />
@@ -43,7 +43,7 @@ export const Overview = ({ displayPieChart,
               <DisplayReportCard
                 title="Total Cancelled Orders"
                 amount={cancelledOrder}
-                ReportIcon = "fa fa-ban adjust-cart"
+                ReportIcon = "fa fa-ban adjust-cart adjust-cancel-card"
                 id="cancelledOrder"
                 handleDisplayChart = {handleDisplayChart}
               />
@@ -55,7 +55,7 @@ export const Overview = ({ displayPieChart,
                 title="Total Purchased Product"
                 amount={totalPurchasedProduct}
                 id="purchasedProduct"
-                ReportIcon = "fa fa-product-hunt adjust-cart"
+                ReportIcon = "fa fa-product-hunt adjust-cart adjust-purchased-card"
                 handleDisplayChart = {handleDisplayChart}
               />
             </div>
@@ -64,7 +64,7 @@ export const Overview = ({ displayPieChart,
                 title="Total Orders"
                 amount={totalOrders}
                 id="totalOrders"
-                ReportIcon = "fa fa-sun-o adjust-cart"
+                ReportIcon = "fa fa-sun-o adjust-cart adjust-orders-card"
                 handleDisplayChart = {handleDisplayChart}
               />
             </div>
