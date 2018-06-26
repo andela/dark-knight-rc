@@ -61,8 +61,6 @@ export class Report extends React.Component {
       });
     });
 
-    // console.log("******orders***", orders);
-
     Meteor.call("getAllProducts", function (err, data) {
       data.map(item => {
         arrNew.push(item);
@@ -89,14 +87,29 @@ export class Report extends React.Component {
 
   // Handle change in date
   handleChangeDate = (dateEvent) => {
+    // clear the infor
+    this.setState({
+      displaySales: [],
+      productSales: {},
+      totalSales: 0,
+      cancelledOrder: 0,
+      totalPurchasedProduct: 0,
+      totalOrders: 0,
+      displayOrderPieChart: []
+    });
+    let fromdateValue = this.state.fromDate;
+    let todateValue = this.state.toDate;
+
     const dateId = dateEvent.target.id;
     const dateValue = dateEvent.target.value;
     if (dateId === "startDateSearch") {
+      fromdateValue = new Date(dateValue);
       this.setState({
         fromDate: new Date(dateValue)
       });
     }
     if (dateId === "endDateSearch") {
+      todateValue = new Date(dateValue);
       this.setState({
         toDate: new Date(dateValue)
       });
@@ -104,11 +117,10 @@ export class Report extends React.Component {
     let orders;
     const self = this;
     Meteor.call("getOrdersFromDb", {
-      fromDate: this.state.fromDate,
-      toDate: this.state.toDate
+      fromDate: fromdateValue,
+      toDate: todateValue
     }, function (err, data) {
       orders = GetHelper(data);
-      window.console.log(orders);
       self.setState({
         displaySales: orders.totalSalesHistory,
         productSales: orders.analytics,
@@ -174,7 +186,6 @@ export class Report extends React.Component {
     } else if (event.target.id === "tooltipInventoryReport") {
       this.setState({ tooltipIsOpenInventory: false });
     }
-    // console.log("mouseout");
   }
 
   handleMouseOver = (event) => {
@@ -212,7 +223,7 @@ export class Report extends React.Component {
       reportTitle: "Data and Inventory Report",
       setOverviewActive: false,
       setSalesActive: false,
-      setInventoryActive: true,
+      setInventoryActive: true
     });
   }
 

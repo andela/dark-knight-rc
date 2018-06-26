@@ -55,6 +55,7 @@ const Charts = ({ showSalesChart, salesData,
               width={600}
               height={400}
             >
+            <Legend payload={[{ value: 'Total order', type: 'rect', id: 'ID01', color: '#4da937' }, { value: 'Total cancelled Order', type: 'rect', id: 'ID02', color: '#f43535' }]}/>
               <Pie data={pieChartData}
                 dataKey="value"
                 labelLine={false}

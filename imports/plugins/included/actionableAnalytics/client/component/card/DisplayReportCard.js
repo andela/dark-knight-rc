@@ -3,7 +3,7 @@ import React from "react";
 
 const DisplayReportCard = ({ title, id, amount, ReportIcon, handleDisplayChart }) => {
   return (
-    <div className="card"
+    <div className="rc-card"
 
       onClick={handleDisplayChart}
     >
