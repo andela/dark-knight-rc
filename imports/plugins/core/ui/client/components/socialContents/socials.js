@@ -6,7 +6,7 @@ import { registerComponent } from "@reactioncommerce/reaction-components";
 export const SocialContents = () => {
   return (
     <div className="instagram-content">
-      <div className="elfsight-app-5d0f9911-1aa0-41b8-aa08-5adf68710d3c" />
+      <div className="elfsight-app-b5bc02a8-dbc2-4843-9caf-03b43d84aa6e" />
       {InstagramPlugin.render()}
     </div>
   );
