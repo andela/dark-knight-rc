@@ -6,7 +6,7 @@ class ProductGrid extends Component {
   static propTypes = {
     products: PropTypes.array
   }
-
+  
   renderProductGridItems = (products) => {
     if (Array.isArray(products)) {
       return products.map((product, index) => {

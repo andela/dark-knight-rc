@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Components } from "@reactioncommerce/reaction-components";
 import { Meteor } from "meteor/meteor";
+import { Router } from '/client/api';
+import { landingTour, paymentTour, productsTour } from '../../../../custom/customer-tour/client/customerTour'
 
 // TODO: Delete this, and do it the react way - Mike M.
 async function openSearchModalLegacy(props) {
@@ -138,12 +140,40 @@ class NavBar extends Component {
     );
   }
 
+  renderCustomerTourButton() {
+    let label, method;
+    switch (Router.current().route.path) {
+      case "/":
+        method = () => landingTour();
+        break;
+      case "/tag/all-product":
+        method = () => productsTour();
+        break;
+      case "/account/wallet":
+        method = () => paymentTour();
+        break;
+      default:
+        label = null;
+        method = null;
+        break;
+    }
+    return (
+      <div >
+        <button
+          className="btn btn-md tour-button"
+          onClick={() => method()}>Tour Shop
+        </button>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div className="rui navbar">
         {this.renderHamburgerButton()}
         {this.renderBrand()}
         {this.renderTagNav()}
+        {this.renderCustomerTourButton()}
         {this.renderSearchButton()}
         {this.renderNotificationIcon()}
         {this.renderStaticPage()}
