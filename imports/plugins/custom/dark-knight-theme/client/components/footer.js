@@ -16,9 +16,9 @@ const Footer = () => {
       </div>
       <div className="col-xs-4 col-md-3 align-center">
         <h4>Useful Links</h4>
-        <p><a href="#">T&amp;C Policy</a></p>
-        <p><a href="#">Shipping and Returns</a></p>
-        <p><a href="#">About us</a></p>
+        <p><a href="/static-pages/terms-conditions">T&amp;C Policy</a></p>
+        <p><a href="/static-pages/shipping">Shipping and Returns</a></p>
+        <p><a href="/static-pages/about">About us</a></p>
       </div>
       <div className="col-xs-2 col-md-3 align-center social">
         <h4>Contact Us</h4>
